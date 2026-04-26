@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier - TOONART</title>
+    <link rel="stylesheet" href="/css/toonart-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Cart Page Specific Styles */
+        .cart-page {
+            padding: 2rem 0;
+            background: var(--toonart-black);
+            min-height: 60vh;
+        }
+
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .cart-items {
+            background: var(--toonart-gray);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+            align-items: center;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 2px solid var(--toonart-red);
+        }
+
+        .cart-item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            color: var(--toonart-white);
+            font-size: 1.1rem;
+        }
+
+        .cart-item-category {
+            color: var(--toonart-white-muted);
+            font-size: 0.9rem;
+        }
+
+        .cart-item-price {
+            font-weight: bold;
+            color: var(--toonart-red);
+            font-size: 1.2rem;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: flex-end;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-control button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            background: var(--toonart-dark);
+            color: var(--toonart-white);
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .quantity-control button:hover {
+            background: var(--toonart-red);
+            border-color: var(--toonart-red);
+        }
+
+        .quantity-control input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 5px;
+            font-size: 1rem;
+            background: var(--toonart-dark);
+            color: var(--toonart-white);
+        }
+
+        .remove-item {
+            background: transparent;
+            color: var(--toonart-red);
+            border: 1px solid var(--toonart-red);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .remove-item:hover {
+            background: var(--toonart-red);
+            color: var(--toonart-white);
+        }
+
+        .cart-summary {
+            background: var(--toonart-gray);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: var(--toonart-white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--toonart-red);
+            padding-bottom: 0.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: var(--toonart-white-muted);
+        }
+
+        .summary-row.total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--toonart-white);
+            padding-top: 1rem;
+            border-top: 2px solid rgba(220, 38, 38, 0.3);
+            margin-top: 1rem;
+        }
+
+        .discount-code {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--toonart-dark);
+            border-radius: 5px;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .discount-code input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--toonart-gray);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 5px;
+            color: var(--toonart-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .apply-discount {
+            background: transparent;
+            color: var(--toonart-red);
+            border: 1px solid var(--toonart-red);
+            padding: 0.75rem;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .apply-discount:hover {
+            background: var(--toonart-red);
+            color: var(--toonart-white);
+        }
+
+        .checkout-button {
+            background: var(--toonart-red);
+            color: var(--toonart-white);
+            border: 2px solid var(--toonart-red);
+            padding: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+
+        .checkout-button:hover {
+            background: transparent;
+            color: var(--toonart-red);
+        }
+
+        .continue-shopping {
+            display: inline-block;
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--toonart-red);
+            text-decoration: none;
+            transition: color 0.3s;
+            width: 100%;
+        }
+
+        .continue-shopping:hover {
+            color: var(--toonart-red-light);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            background: var(--toonart-gray);
+            border-radius: 10px;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .empty-cart h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--toonart-white);
+        }
+
+        .empty-cart p {
+            color: var(--toonart-white-muted);
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .cart-summary {
+                position: static;
+            }
+
+            .cart-item {
+                grid-template-columns: auto 1fr;
+                gap: 1rem;
+            }
+
+            .cart-item-actions {
+                grid-column: 2;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .cart-item-info {
+                grid-column: 2;
+            }
+
+            .cart-item-image {
+                grid-row: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">TOONART</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/products.html">Produits</a></li>
+                        <li><a href="/categories.html">Catégories</a></li>
+                        <li><a href="/about.html">À propos</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="/login.html" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">Se connecter</a>
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cart Page Content -->
+    <section class="cart-page">
+        <div class="container">
+            <h1 class="page-title">Mon Panier</h1>
+
+            <div class="cart-container" id="cartContainer">
+                <!-- Cart content will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>TOONART</h3>
+                    <p>Votre destination préférée pour tous vos besoins en produits de qualité.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/products.html">Produits</a></li>
+                        <li><a href="/categories.html">Catégories</a></li>
+                        <li><a href="/about.html">À propos</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Informations</h3>
+                    <ul>
+                        <li><a href="/shipping.html">Livraison</a></li>
+                        <li><a href="/returns.html">Retours</a></li>
+                        <li><a href="/privacy.html">Confidentialité</a></li>
+                        <li><a href="/terms.html">Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope" style="color: var(--toonart-red);"></i> contact@toonart.com</li>
+                        <li><i class="fas fa-phone" style="color: var(--toonart-red);"></i> +216 99 192 452</li>
+                        <li><i class="fas fa-map-marker-alt" style="color: var(--toonart-red);"></i> Tunis, Tunisie</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TOONART. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API configuration
+        const API_BASE_URL = 'http://localhost:5001/api';
+        let cart = [];
+        let products = [];
+
+        // Load cart from localStorage
+        function loadCart() {
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+            loadProducts();
+        }
+
+        // Load all products
+        function loadProducts() {
+            fetch(`${API_BASE_URL}/products`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        products = data.data;
+                        displayCart();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading products:', error);
+                    displayCart();
+                });
+        }
+
+        // Display cart
+        function displayCart() {
+            const cartContainer = document.getElementById('cartContainer');
+            
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `
+                    <div class="empty-cart" style="grid-column: 1 / -1;">
+                        <h3>Panier vide</h3>
+                        <p>Votre panier ne contient aucun produit</p>
+                        <a href="/products.html" class="btn">Continuer vos achats</a>
+                    </div>
+                `;
+                updateCartCount();
+                return;
+            }
+
+            // Calculate total
+            const cartItems = cart.map(item => {
+                const product = products.find(p => p._id === item.productId);
+                return {
+                    ...item,
+                    product: product
+                };
+            });
+
+            // Display cart items
+            cartContainer.innerHTML = `
+                <div class="cart-items">
+                    ${cartItems.map(item => createCartItem(item)).join('')}
+                </div>
+                <div class="cart-summary">
+                    ${createCartSummary(cartItems)}
+                </div>
+            `;
+
+            updateCartCount();
+        }
+
+        // Create cart item
+        function createCartItem(item) {
+            if (!item.product) {
+                return '';
+            }
+
+            const imageUrl = item.product.imageURL || 'https://via.placeholder.com/80x80?text=Produit';
+
+            return `
+                <div class="cart-item">
+                    <img src="${imageUrl}" alt="${item.product.nom}" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.product.nom}</div>
+                        <div class="cart-item-category">${item.product.categorie}</div>
+                        <div class="cart-item-price">${item.product.prix} DT</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="quantity-control">
+                            <button onclick="updateQuantity('${item.productId}', -1)">-</button>
+                            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantityInput('${item.productId}', this.value)">
+                            <button onclick="updateQuantity('${item.productId}', 1)">+</button>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart('${item.productId}')">Supprimer</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Create cart summary
+        function createCartSummary(cartItems) {
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.product.prix * item.quantity), 0);
+            const shipping = 10; // Fixed shipping cost
+            const total = subtotal + shipping;
+
+            return `
+                <h3 class="summary-title">Récapitulatif</h3>
+                <div class="summary-row">
+                    <span>Articles (${getTotalItems()}):</span>
+                    <span>${subtotal.toFixed(2)} DT</span>
+                </div>
+                <div class="summary-row">
+                    <span>Livraison:</span>
+                    <span>${shipping.toFixed(2)} DT</span>
+                </div>
+                <div class="discount-code">
+                    <input type="text" placeholder="Code promo">
+                    <button class="apply-discount">Appliquer</button>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span>${total.toFixed(2)} DT</span>
+                </div>
+                <button class="checkout-button" onclick="checkout()">Procéder au paiement</button>
+                <a href="/products.html" class="continue-shopping">Continuer vos achats</a>
+            `;
+        }
+
+        // Update quantity
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.productId === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity < 1) {
+                    removeFromCart(productId);
+                } else {
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    loadCart();
+                }
+            }
+        }
+
+        // Update quantity from input
+        function updateQuantityInput(productId, value) {
+            const quantity = parseInt(value);
+            const item = cart.find(item => item.productId === productId);
+            
+            if (item) {
+                if (quantity < 1) {
+                    removeFromCart(productId);
+                } else {
+                    item.quantity = quantity;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    loadCart();
+                }
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce produit?')) {
+                cart = cart.filter(item => item.productId !== productId);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                loadCart();
+            }
+        }
+
+        // Get total items
+        function getTotalItems() {
+            return cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+
+        // Checkout
+        function checkout() {
+            alert('Redirection vers la page de paiement...');
+            window.location.href = '/checkout.html';
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const totalItems = getTotalItems();
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // Apply discount
+        function applyDiscount() {
+            alert('Code promo appliqué!');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+            
+            // Apply discount button
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('apply-discount')) {
+                    applyDiscount();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

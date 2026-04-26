@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOONART - Boutique en Ligne</title>
+    <link rel="stylesheet" href="/css/toonart-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">TOONART</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/products.html">Produits</a></li>
+                        <li><a href="/categories.html">Catégories</a></li>
+                        <li><a href="/about.html">À propos</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="/login.html" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">Se
+                        connecter</a>
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>TOONART</h1>
+            <p>Découvrez notre sélection de produits de qualité à prix abordables. Livraison rapide et service client
+                exceptionnel.</p>
+
+            <div style="margin-top: 3rem;">
+                <a href="/products.html" class="btn" style="padding: 16px 40px; font-size: 1.1rem;">Voir les
+                    produits</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h3>Livraison Rapide</h3>
+                    <p>Livraison express dans 24-48h partout en Tunisie</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Paiement Sécurisé</h3>
+                    <p>Toutes vos transactions sont protégées</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>Support 24/7</h3>
+                    <p>Notre équipe est là pour vous aider à tout moment</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-tags"></i>
+                    <h3>Meilleurs Prix</h3>
+                    <p>Garantie du meilleur prix sur le marché</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">Produits Populaires</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+            <div style="text-align: center;">
+                <a href="/products.html" class="btn">Voir tous les produits</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <h2>Recevez nos offres exclusives</h2>
+            <div style="max-width: 500px; margin: 0 auto;">
+                <form id="newsletterForm">
+                    <div style="display: flex; gap: 1rem;">
+                        <input type="email" placeholder="Votre email" style="flex: 1;">
+                        <button type="submit" class="btn">S'inscrire</button>
+                    </div>
+                </form>
+                <p style="margin-top: 1rem; font-size: 0.9rem; text-align: center; color: var(--toonart-white-muted);">
+                    Nous ne partageons pas vos informations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>TOONART</h3>
+                    <p>Votre destination préférée pour tous vos besoins en produits de qualité.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/products.html">Produits</a></li>
+                        <li><a href="/categories.html">Catégories</a></li>
+                        <li><a href="/about.html">À propos</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Informations</h3>
+                    <ul>
+                        <li><a href="/shipping.html">Livraison</a></li>
+                        <li><a href="/returns.html">Retours</a></li>
+                        <li><a href="/privacy.html">Confidentialité</a></li>
+                        <li><a href="/terms.html">Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope" style="color: var(--toonart-red);"></i> contact@toonart.com</li>
+                        <li><i class="fas fa-phone" style="color: var(--toonart-red);"></i> +216 99 192 452</li>
+                        <li><i class="fas fa-map-marker-alt" style="color: var(--toonart-red);"></i> Tunis, Tunisie</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TOONART. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API configuration
+        const API_BASE_URL = 'http://localhost:5001/api';
+
+        // Load featured products
+        function loadFeaturedProducts() {
+            fetch(`${API_BASE_URL}/products`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const productsGrid = document.getElementById('productsGrid');
+                        // Display only first 8 products
+                        const featuredProducts = data.data.slice(0, 8);
+
+                        featuredProducts.forEach(product => {
+                            const productCard = createProductCard(product);
+                            productsGrid.appendChild(productCard);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading products:', error);
+                });
+        }
+
+        // Create product card
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+
+            const imageUrl = product.imageURL || 'https://via.placeholder.com/280x200?text=Produit';
+
+            card.innerHTML = `
+                <img src="${imageUrl}" alt="${product.nom}" class="product-image">
+                <div class="product-info">
+                    <div class="product-badge">Nouveau</div>
+                    <h3 class="product-name">${product.nom}</h3>
+                    <p class="product-description">${product.description.slice(0, 100)}...</p>
+                    <div class="product-price">${product.prix} DT</div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn" style="flex: 1;" onclick="addToCart('${product._id}')">Ajouter au panier</button>
+                        <a href="/product.html?id=${product._id}" class="btn btn-secondary" style="flex: 1;">Voir détails</a>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.productId === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ productId, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            alert('Produit ajouté au panier!');
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // Newsletter form
+        document.getElementById('newsletterForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Merci pour votre inscription!');
+            this.reset();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            loadFeaturedProducts();
+            updateCartCount();
+        });
+    </script>
+</body>
+
+</html>

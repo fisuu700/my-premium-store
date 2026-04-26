@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - TOONART</title>
+    <link rel="stylesheet" href="/css/toonart-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--toonart-white);
+            background: linear-gradient(135deg, var(--toonart-black) 0%, var(--toonart-dark) 50%, #1a0000 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Register Form Container */
+        .register-container {
+            background: var(--toonart-gray);
+            border-radius: 10px;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.2);
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            margin: 2rem auto;
+        }
+
+        /* Logo and Title */
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--toonart-white);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo::before {
+            content: "👁";
+            font-size: 2.5rem;
+            color: var(--toonart-red);
+            text-shadow: 0 0 10px var(--toonart-red);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            color: var(--toonart-white-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--toonart-white);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--toonart-dark);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 5px;
+            color: var(--toonart-white);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--toonart-red);
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--toonart-white-muted);
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            accent-color: var(--toonart-red);
+        }
+
+        /* Form Actions */
+        .form-actions {
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--toonart-red);
+            color: var(--toonart-white);
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid var(--toonart-red);
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--toonart-red);
+        }
+
+        /* Social Register */
+        .social-register {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .social-register p {
+            text-align: center;
+            color: var(--toonart-white-muted);
+            margin-bottom: 1rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-button {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            background: var(--toonart-dark);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            color: var(--toonart-white);
+        }
+
+        .social-button:hover {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: var(--toonart-red);
+        }
+
+        /* Login Link */
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--toonart-white-muted);
+            font-size: 0.9rem;
+        }
+
+        .login-link a {
+            color: var(--toonart-red);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .login-link a:hover {
+            color: var(--toonart-red-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .register-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Register Container -->
+        <div class="register-container">
+            <div class="register-header">
+                <a href="/" class="logo">TOONART</a>
+                <p class="tagline">Créer votre compte</p>
+            </div>
+
+            <!-- Register Form -->
+            <form id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Prénom</label>
+                        <input type="text" id="firstName" placeholder="Prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Nom</label>
+                        <input type="text" id="lastName" placeholder="Nom" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="vous@exemple.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Numéro de téléphone</label>
+                    <input type="tel" id="phone" placeholder="+216 99 192 452" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" placeholder="Votre mot de passe" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmer le mot de passe</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirmer le mot de passe" required>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">J'accepte les conditions générales de vente</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="newsletter">
+                    <label for="newsletter">Je souhaite recevoir les newsletters</label>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn">S'inscrire</button>
+                </div>
+            </form>
+
+            <!-- Social Register -->
+            <div class="social-register">
+                <p>Ou inscrivez-vous avec</p>
+                <div class="social-buttons">
+                    <button class="social-button">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="social-button">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="social-button">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Login Link -->
+            <div class="login-link">
+                <p>Vous avez déjà un compte? <a href="/login.html">Se connecter</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API configuration
+        const API_BASE_URL = 'http://localhost:5001/api';
+
+        // Register form
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+
+            // Validate inputs
+            if (!firstName || !lastName || !email || !phone || !password || !confirmPassword) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Les mots de passe ne correspondent pas');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('Le mot de passe doit contenir au moins 6 caractères');
+                return;
+            }
+
+            if (!terms) {
+                alert('Veuillez accepter les conditions générales de vente');
+                return;
+            }
+
+            // Simulate registration (in real app, this would call API)
+            alert('Inscription réussie!');
+            localStorage.setItem('user', JSON.stringify({
+                email: email,
+                name: `${firstName} ${lastName}`
+            }));
+            window.location.href = '/';
+        });
+
+        // Social register
+        document.querySelectorAll('.social-button').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Inscription sociale en cours...');
+            });
+        });
+    </script>
+</body>
+</html>

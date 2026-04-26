@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Category Filter</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .product-card h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .product-card .price {
+            font-weight: bold;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test de filtre par catégorie</h1>
+
+    <div class="filter-group">
+        <label for="categoryFilter">Catégorie</label>
+        <select id="categoryFilter">
+            <option value="">Toutes les catégories</option>
+            <option value="Électronique">Électronique</option>
+            <option value="Audio">Audio</option>
+            <option value="Wearables">Wearables</option>
+            <option value="Accessoires">Accessoires</option>
+        </select>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+        <!-- Products will be loaded here -->
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5001/api';
+        let allProducts = [];
+        let filteredProducts = [];
+
+        // Load all products
+        function loadProducts() {
+            fetch(`${API_BASE_URL}/products`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        allProducts = data.data;
+                        filteredProducts = [...allProducts];
+                        displayProducts();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading products:', error);
+                });
+        }
+
+        // Display products
+        function displayProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '';
+
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <h3>${product.nom}</h3>
+                    <p class="price">${product.prix} DT</p>
+                    <p>${product.categorie}</p>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const category = document.getElementById('categoryFilter').value;
+            
+            filteredProducts = allProducts.filter(product => {
+                const matchesCategory = !category || product.categorie === category;
+                return matchesCategory;
+            });
+
+            displayProducts();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            
+            // Apply filter on change
+            document.getElementById('categoryFilter').addEventListener('change', applyFilters);
+            
+            // Apply category filter from URL query parameter
+            const params = new URLSearchParams(window.location.search);
+            const categoryParam = params.get('category');
+            if (categoryParam) {
+                document.getElementById('categoryFilter').value = decodeURIComponent(categoryParam);
+                // Wait for products to load before applying filter
+                setTimeout(() => applyFilters(), 100);
+            }
+        });
+    </script>
+</body>
+</html>

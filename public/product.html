@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produit - TOONART</title>
+    <link rel="stylesheet" href="/css/toonart-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Product Detail Specific Styles */
+        .product-detail {
+            padding: 2rem 0;
+            background: var(--toonart-black);
+            min-height: 60vh;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-image-container {
+            background: var(--toonart-gray);
+            border-radius: 10px;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-badge {
+            display: inline-block;
+            background: var(--toonart-red);
+            color: var(--toonart-white);
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .product-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--toonart-white);
+        }
+
+        .product-category {
+            color: var(--toonart-red);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #f39c12;
+            font-size: 1.2rem;
+        }
+
+        .rating-count {
+            color: var(--toonart-white-muted);
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--toonart-red);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+        }
+
+        .product-description {
+            color: var(--toonart-white-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .product-stock {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        .stock-available {
+            color: #27ae60;
+        }
+
+        .stock-low {
+            color: #f39c12;
+        }
+
+        .stock-out {
+            color: var(--toonart-red);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-control button {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            background: var(--toonart-dark);
+            color: var(--toonart-white);
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .quantity-control button:hover {
+            background: var(--toonart-red);
+            border-color: var(--toonart-red);
+        }
+
+        .quantity-control input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 5px;
+            font-size: 1.2rem;
+            background: var(--toonart-dark);
+            color: var(--toonart-white);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--toonart-red);
+            border: 2px solid var(--toonart-red);
+        }
+
+        .btn-outline:hover {
+            background: var(--toonart-red);
+            color: var(--toonart-white);
+        }
+
+        /* Product Features */
+        .product-features {
+            background: var(--toonart-gray);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .product-features h3 {
+            margin-bottom: 1rem;
+            color: var(--toonart-white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--toonart-red);
+            padding-bottom: 0.5rem;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--toonart-white-muted);
+        }
+
+        .feature-item i {
+            color: var(--toonart-red);
+        }
+
+        /* Related Products */
+        .related-products {
+            margin-bottom: 3rem;
+        }
+
+        .related-products .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--toonart-white);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .related-card {
+            background: var(--toonart-gray);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--toonart-red);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.2);
+        }
+
+        .related-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--toonart-red);
+        }
+
+        .related-info {
+            padding: 1rem;
+        }
+
+        .related-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--toonart-white);
+        }
+
+        .related-price {
+            font-weight: bold;
+            color: var(--toonart-red);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: var(--toonart-white-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--toonart-red);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--toonart-red-light);
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .product-name {
+                font-size: 1.5rem;
+            }
+
+            .product-price {
+                font-size: 2rem;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .related-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">TOONART</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/products.html">Produits</a></li>
+                        <li><a href="/categories.html">Catégories</a></li>
+                        <li><a href="/about.html">À propos</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="/login.html" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">Se connecter</a>
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Product Detail Content -->
+    <section class="product-detail">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="/">Accueil</a> > 
+                <a href="/products.html">Produits</a> > 
+                <span id="productBreadcrumb">Produit</span>
+            </div>
+
+            <div class="product-container" id="productContainer">
+                <!-- Product will be loaded here -->
+            </div>
+
+            <!-- Product Features -->
+            <div class="product-features">
+                <h3>Caractéristiques</h3>
+                <div class="features-list" id="featuresList">
+                    <!-- Features will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <div class="related-products">
+                <h3 class="section-title">Produits similaires</h3>
+                <div class="related-grid" id="relatedGrid">
+                    <!-- Related products will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>TOONART</h3>
+                    <p>Votre destination préférée pour tous vos besoins en produits de qualité.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/products.html">Produits</a></li>
+                        <li><a href="/categories.html">Catégories</a></li>
+                        <li><a href="/about.html">À propos</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Informations</h3>
+                    <ul>
+                        <li><a href="/shipping.html">Livraison</a></li>
+                        <li><a href="/returns.html">Retours</a></li>
+                        <li><a href="/privacy.html">Confidentialité</a></li>
+                        <li><a href="/terms.html">Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope" style="color: var(--toonart-red);"></i> contact@toonart.com</li>
+                        <li><i class="fas fa-phone" style="color: var(--toonart-red);"></i> +216 99 192 452</li>
+                        <li><i class="fas fa-map-marker-alt" style="color: var(--toonart-red);"></i> Tunis, Tunisie</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TOONART. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API configuration
+        const API_BASE_URL = 'http://localhost:5001/api';
+        let currentProduct = null;
+        let quantity = 1;
+
+        // Get product ID from URL
+        function getProductId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+
+        // Load product detail
+        function loadProductDetail() {
+            const productId = getProductId();
+            
+            if (!productId) {
+                window.location.href = '/products.html';
+                return;
+            }
+
+            fetch(`${API_BASE_URL}/products/${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentProduct = data.data;
+                        displayProductDetail();
+                        loadRelatedProducts();
+                    } else {
+                        window.location.href = '/products.html';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading product:', error);
+                    window.location.href = '/products.html';
+                });
+        }
+
+        // Display product detail
+        function displayProductDetail() {
+            if (!currentProduct) return;
+
+            const productContainer = document.getElementById('productContainer');
+            const imageUrl = currentProduct.imageURL || 'https://via.placeholder.com/400x400?text=Produit';
+            
+            // Stock status
+            let stockStatus = '';
+            if (currentProduct.stock > 10) {
+                stockStatus = `<span class="stock-available"><i class="fas fa-check-circle"></i> En stock (${currentProduct.stock} unités)</span>`;
+            } else if (currentProduct.stock > 0) {
+                stockStatus = `<span class="stock-low"><i class="fas fa-exclamation-triangle"></i> Stock faible (${currentProduct.stock} unités)</span>`;
+            } else {
+                stockStatus = `<span class="stock-out"><i class="fas fa-times-circle"></i> Rupture de stock</span>`;
+            }
+
+            productContainer.innerHTML = `
+                <div class="product-image-container">
+                    <img src="${imageUrl}" alt="${currentProduct.nom}" class="product-image">
+                </div>
+                <div class="product-info">
+                    <div class="product-badge">Nouveau</div>
+                    <h1 class="product-name">${currentProduct.nom}</h1>
+                    <div class="product-category">Catégorie: ${currentProduct.categorie}</div>
+                    <div class="product-rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <span class="rating-count">(128 avis)</span>
+                    </div>
+                    <div class="product-price">${currentProduct.prix} DT</div>
+                    <div class="product-description">${currentProduct.description}</div>
+                    <div class="product-stock">
+                        ${stockStatus}
+                    </div>
+                    <div class="product-actions">
+                        <div class="quantity-control">
+                            <button onclick="updateQuantity(-1)">-</button>
+                            <input type="number" id="quantityInput" value="${quantity}" min="1" max="${currentProduct.stock}">
+                            <button onclick="updateQuantity(1)">+</button>
+                        </div>
+                        <button class="btn" onclick="addToCart()" ${currentProduct.stock === 0 ? 'disabled' : ''}>
+                            <i class="fas fa-shopping-cart"></i> Ajouter au panier
+                        </button>
+                        <button class="btn btn-outline"><i class="fas fa-heart"></i> Favoris</button>
+                    </div>
+                </div>
+            `;
+
+            // Update breadcrumb
+            document.getElementById('productBreadcrumb').textContent = currentProduct.nom;
+
+            // Load product features
+            loadProductFeatures();
+        }
+
+        // Load product features
+        function loadProductFeatures() {
+            const featuresList = document.getElementById('featuresList');
+            const features = [
+                { icon: 'fa-check-circle', text: 'Qualité garantie' },
+                { icon: 'fa-shipping-fast', text: 'Livraison rapide' },
+                { icon: 'fa-undo', text: 'Retour 30 jours' },
+                { icon: 'fa-headset', text: 'Support 24/7' },
+                { icon: 'fa-shield-alt', text: 'Paiement sécurisé' }
+            ];
+
+            featuresList.innerHTML = features.map(feature => `
+                <div class="feature-item">
+                    <i class="fas ${feature.icon}"></i>
+                    <span>${feature.text}</span>
+                </div>
+            `).join('');
+        }
+
+        // Load related products
+        function loadRelatedProducts() {
+            if (!currentProduct) return;
+
+            fetch(`${API_BASE_URL}/products`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const relatedProducts = data.data.filter(product => 
+                            product.categorie === currentProduct.categorie && product._id !== currentProduct._id
+                        ).slice(0, 4);
+
+                        const relatedGrid = document.getElementById('relatedGrid');
+                        
+                        if (relatedProducts.length > 0) {
+                            relatedGrid.innerHTML = relatedProducts.map(product => {
+                                const imageUrl = product.imageURL || 'https://via.placeholder.com/200x150?text=Produit';
+                                return `
+                                    <div class="related-card" onclick="goToProduct('${product._id}')">
+                                        <img src="${imageUrl}" alt="${product.nom}" class="related-image">
+                                        <div class="related-info">
+                                            <div class="related-name">${product.nom.slice(0, 20)}${product.nom.length > 20 ? '...' : ''}</div>
+                                            <div class="related-price">${product.prix} DT</div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('');
+                        } else {
+                            relatedGrid.innerHTML = `
+                                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--toonart-white-muted);">
+                                    Aucun produit similaire disponible
+                                </div>
+                            `;
+                        }
+                    }
+                });
+        }
+
+        // Update quantity
+        function updateQuantity(change) {
+            quantity += change;
+            if (quantity < 1) quantity = 1;
+            if (currentProduct && quantity > currentProduct.stock) quantity = currentProduct.stock;
+            
+            document.getElementById('quantityInput').value = quantity;
+        }
+
+        // Add to cart
+        function addToCart() {
+            if (!currentProduct) return;
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.productId === currentProduct._id);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ productId: currentProduct._id, quantity: quantity });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            alert(`Ajouté ${quantity} ${quantity > 1 ? 'unités' : 'unité'} au panier!`);
+        }
+
+        // Go to product
+        function goToProduct(productId) {
+            window.location.href = `/product.html?id=${productId}`;
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProductDetail();
+            updateCartCount();
+            
+            // Quantity input change
+            document.addEventListener('change', function(e) {
+                if (e.target.id === 'quantityInput') {
+                    let value = parseInt(e.target.value);
+                    if (isNaN(value) || value < 1) {
+                        value = 1;
+                    } else if (currentProduct && value > currentProduct.stock) {
+                        value = currentProduct.stock;
+                    }
+                    quantity = value;
+                    e.target.value = quantity;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catégories - TOONART</title>
+    <link rel="stylesheet" href="/css/toonart-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">TOONART</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/products.html">Produits</a></li>
+                        <li><a href="/categories.html">Catégories</a></li>
+                        <li><a href="/about.html">À propos</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="/login.html" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">Se connecter</a>
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Categories Page Content -->
+    <section class="categories-page">
+        <div class="container">
+            <h1 class="page-title">Catégories</h1>
+
+            <!-- Categories Grid -->
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories will be loaded here -->
+            </div>
+
+            <!-- Featured Products -->
+            <div class="featured-section" style="margin-top: 4rem;">
+                <h2 class="section-title">Produits populaires</h2>
+                <div class="products-grid" id="featuredGrid">
+                    <!-- Featured products will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>TOONART</h3>
+                    <p>Votre destination préférée pour tous vos besoins en produits de qualité.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/products.html">Produits</a></li>
+                        <li><a href="/categories.html">Catégories</a></li>
+                        <li><a href="/about.html">À propos</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Informations</h3>
+                    <ul>
+                        <li><a href="/shipping.html">Livraison</a></li>
+                        <li><a href="/returns.html">Retours</a></li>
+                        <li><a href="/privacy.html">Confidentialité</a></li>
+                        <li><a href="/terms.html">Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope" style="color: var(--toonart-red);"></i> contact@toonart.com</li>
+                        <li><i class="fas fa-phone" style="color: var(--toonart-red);"></i> +216 99 192 452</li>
+                        <li><i class="fas fa-map-marker-alt" style="color: var(--toonart-red);"></i> Tunis, Tunisie</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TOONART. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API configuration
+        const API_BASE_URL = 'http://localhost:5001/api';
+
+        // Load categories
+        function loadCategories() {
+            fetch(`${API_BASE_URL}/products`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const products = data.data;
+                        const categories = getCategoriesFromProducts(products);
+                        displayCategories(categories);
+                        displayFeaturedProducts(products);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading products:', error);
+                });
+        }
+
+        // Get categories from products
+        function getCategoriesFromProducts(products) {
+            const categoriesMap = {};
+            products.forEach(product => {
+                const category = product.categorie;
+                if (!categoriesMap[category]) {
+                    categoriesMap[category] = {
+                        name: category,
+                        description: getCategoryDescription(category),
+                        count: 0,
+                        image: getCategoryImage(category)
+                    };
+                }
+                categoriesMap[category].count++;
+            });
+            return Object.values(categoriesMap);
+        }
+
+        // Get category description
+        function getCategoryDescription(category) {
+            const descriptions = {
+                'Électronique': 'Téléphones, ordinateurs, accessoires',
+                'Audio': 'Casques, enceintes, écouteurs',
+                'Wearables': 'Montres connectées, bracelets',
+                'Accessoires': 'Équipements et accessoires',
+                'Mode': 'Vêtements, chaussures, accessoires',
+                'Maison': 'Mobilier, décoration, cuisine',
+                'Sport': 'Équipement sportif, athlétisme',
+                'Livres': 'Littérature, sciences, art'
+            };
+            return descriptions[category] || 'Produits variés';
+        }
+
+        // Get category image
+        function getCategoryImage(category) {
+            const images = {
+                'Électronique': 'https://via.placeholder.com/300x200?text=Electronique',
+                'Audio': 'https://via.placeholder.com/300x200?text=Audio',
+                'Wearables': 'https://via.placeholder.com/300x200?text=Wearables',
+                'Accessoires': 'https://via.placeholder.com/300x200?text=Accessoires',
+                'Mode': 'https://via.placeholder.com/300x200?text=Mode',
+                'Maison': 'https://via.placeholder.com/300x200?text=Maison',
+                'Sport': 'https://via.placeholder.com/300x200?text=Sport',
+                'Livres': 'https://via.placeholder.com/300x200?text=Livres'
+            };
+            return images[category] || 'https://via.placeholder.com/300x200?text=Autres';
+        }
+
+        // Display categories
+        function displayCategories(categories) {
+            const categoriesGrid = document.getElementById('categoriesGrid');
+            categoriesGrid.innerHTML = categories.map(category => `
+                <div class="category-card" onclick="viewCategory('${category.name}')">
+                    <img src="${category.image}" alt="${category.name}" class="category-image">
+                    <div class="category-info">
+                        <div class="category-name">${category.name}</div>
+                        <div class="category-description">${category.description}</div>
+                        <div class="product-count">${category.count} produits</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Display featured products
+        function displayFeaturedProducts(products) {
+            const featuredGrid = document.getElementById('featuredGrid');
+            const featuredProducts = products.slice(0, 6);
+            featuredGrid.innerHTML = featuredProducts.map(product => `
+                <div class="product-card">
+                    <img src="${product.imageURL || 'https://via.placeholder.com/250x180?text=Produit'}" alt="${product.nom}" class="product-image">
+                    <div class="product-info">
+                        <div class="product-badge">Populaire</div>
+                        <div class="product-name">${product.nom.slice(0, 30)}${product.nom.length > 30 ? '...' : ''}</div>
+                        <div class="product-price">${product.prix} DT</div>
+                        <a href="/product.html?id=${product._id}" class="btn" style="width: 100%; text-align: center;">Voir détails</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // View category products
+        function viewCategory(categoryName) {
+            // Redirect to products page with category filter
+            window.location.href = `/products.html?category=${encodeURIComponent(categoryName)}`;
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCategories();
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>

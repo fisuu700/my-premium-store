@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - TOONART</title>
+    <link rel="stylesheet" href="/css/toonart-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Contact Page Specific Styles */
+        .contact-page {
+            padding: 2rem 0;
+            background: var(--toonart-black);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-info {
+            background: var(--toonart-gray);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            color: var(--toonart-white);
+            font-size: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toonart-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--toonart-white-muted);
+        }
+
+        .info-item i {
+            font-size: 1.2rem;
+            color: var(--toonart-red);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 50%;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .info-item .details {
+            flex: 1;
+        }
+
+        .info-item h4 {
+            color: var(--toonart-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-item p {
+            color: var(--toonart-white-muted);
+            font-size: 0.9rem;
+        }
+
+        .contact-form {
+            background: var(--toonart-gray);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .contact-form h3 {
+            margin-bottom: 1.5rem;
+            color: var(--toonart-white);
+            font-size: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toonart-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--toonart-white);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--toonart-dark);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 5px;
+            color: var(--toonart-white);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--toonart-red);
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-actions {
+            margin-top: 2rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: var(--toonart-dark);
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            border-top: 1px solid rgba(220, 38, 38, 0.3);
+            border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .faq-section h3 {
+            text-align: center;
+            color: var(--toonart-white);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            background: var(--toonart-gray);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .faq-question {
+            padding: 1rem;
+            background: var(--toonart-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--toonart-white);
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .faq-answer {
+            padding: 0 1rem 1rem;
+            color: var(--toonart-white-muted);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+            color: var(--toonart-red);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Map Section */
+        .map-section {
+            margin-bottom: 3rem;
+        }
+
+        .map-container {
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid rgba(220, 38, 38, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .faq-grid {
+                padding: 0 1rem;
+            }
+
+            .map-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">TOONART</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/products.html">Produits</a></li>
+                        <li><a href="/categories.html">Catégories</a></li>
+                        <li><a href="/about.html">À propos</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="/login.html" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">Se connecter</a>
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contact Page Content -->
+    <section class="contact-page">
+        <div class="container">
+            <h1 class="page-title">Contactez-nous</h1>
+
+            <!-- Contact Container -->
+            <div class="contact-container">
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <h3>Nos informations</h3>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="details">
+                            <h4>Email</h4>
+                            <p>contact@toonart.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="details">
+                            <h4>Téléphone</h4>
+                            <p>+216 99 192 452</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="details">
+                            <h4>Adresse</h4>
+                            <p>Tunis, Tunisie</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="details">
+                            <h4>Horaires</h4>
+                            <p>Lun-Ven: 9h-18h<br>Sam: 10h-16h<br>Dim: Fermé</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h3>Envoyez-nous un message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" placeholder="Votre nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="vous@exemple.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Sujet</label>
+                            <input type="text" id="subject" placeholder="Sujet du message" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Votre message" required></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn" style="width: 100%;">Envoyer le message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <div class="container">
+                    <h3>Questions fréquentes</h3>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Comment effectuer un retour?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Vous pouvez effectuer un retour dans les 30 jours suivant l'achat. Votre produit doit être dans son emballage d'origine et en état neuf.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Comment suivre ma commande?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Vous recevrez un email de confirmation avec le numéro de suivi une fois votre commande expédiée.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Comment contacter le support?</span>
+                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Vous pouvez contacter notre support par email à contact@toonart.com ou par téléphone au +216 99 192 452.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Section -->
+            <div class="map-section">
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d319715.30573988823!2d10.168274399999999!3d36.81897040000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fd3397598f1a9f%3A0x66103a33e3ef70a2!2sTunis%2C%20Tunisia!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s" width="100%" height="100%" style="border:0; filter: grayscale(100%) invert(92%) contrast(83%);" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>TOONART</h3>
+                    <p>Votre destination préférée pour tous vos besoins en produits de qualité.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/products.html">Produits</a></li>
+                        <li><a href="/categories.html">Catégories</a></li>
+                        <li><a href="/about.html">À propos</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Informations</h3>
+                    <ul>
+                        <li><a href="/shipping.html">Livraison</a></li>
+                        <li><a href="/returns.html">Retours</a></li>
+                        <li><a href="/privacy.html">Confidentialité</a></li>
+                        <li><a href="/terms.html">Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope" style="color: var(--toonart-red);"></i> contact@toonart.com</li>
+                        <li><i class="fas fa-phone" style="color: var(--toonart-red);"></i> +216 99 192 452</li>
+                        <li><i class="fas fa-map-marker-alt" style="color: var(--toonart-red);"></i> Tunis, Tunisie</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TOONART. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Contact Form
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Merci pour votre message! Nous vous répondrons dans les plus brefs délais.');
+            this.reset();
+        });
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>

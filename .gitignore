@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Angular cache and build output
+.angular/
+dist/
+tmp/
+out-tsc/
+bazel-out/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# CMS and Content
+# On garde public/content mais on peut ignorer les images de test si besoin
+# public/images/products/*
+
+# Backend backup
+old-backend/
